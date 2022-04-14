@@ -13,6 +13,7 @@ struct ContentView: View {
     @State private var currentLine = Line()
     @State private var lines: [Line] = []
     @State private var selectedColor: Color = .red
+    @State private var thickness: Double = 0.0
     
     var body: some View {
         VStack {
@@ -22,7 +23,8 @@ struct ContentView: View {
                     path.addLines(line.points)
                     context.stroke(path, with: .color(line.color), lineWidth: line.lineWidth)
                 }
-            }.gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            }.frame(minWidth: 400, minHeight: 400)
+                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
                 .onChanged({value in
                     let newPoint = value.location
                     currentLine.points.append(newPoint)
@@ -30,15 +32,22 @@ struct ContentView: View {
                 })
                 .onEnded({Value in
                     self.lines.append(currentLine)
-                    self.currentLine = Line(points: [], color: selectedColor)
+                    self.currentLine = Line(points: [], color: selectedColor, lineWidth: thickness)
                 })
             )
             
-            ColorPickerView(selectedColor: $selectedColor).onChange(of: selectedColor){ newColor in
-                currentLine.color = newColor
+            HStack {
+                Text("Thickness")
+                Slider(value: $thickness, in: 1...20){
+
+                }.frame(maxWidth: 100)
+                    .onChange(of: thickness){newThickness in
+                        currentLine.lineWidth = newThickness
+                    }
+                ColorPickerView(selectedColor: $selectedColor).onChange(of: selectedColor){ newColor in
+                    currentLine.color = newColor
+                }
             }
-            
-        }.frame(minWidth: 400, minHeight: 400)
-            .padding()
+        }.padding()
     }
 }
