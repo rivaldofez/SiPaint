@@ -27,3 +27,8 @@ struct ColorPickerView: View {
     }
 }
 
+struct ColorListView_Previews: PreviewProvider {
+    static var previews: some View {
+        ColorPickerView(selectedColor: .constant(.blue))
+    }
+}

@@ -12,6 +12,7 @@ struct ContentView: View {
     
     @State private var currentLine = Line()
     @State private var lines: [Line] = []
+    @State private var selectedColor: Color = .red
     
     var body: some View {
         VStack {
@@ -29,9 +30,15 @@ struct ContentView: View {
                 })
                 .onEnded({Value in
                     self.lines.append(currentLine)
-                    self.currentLine = Line(points: [])
+                    self.currentLine = Line(points: [], color: selectedColor)
                 })
             )
+            
+            ColorPickerView(selectedColor: $selectedColor).onChange(of: selectedColor){ newColor in
+                currentLine.color = newColor
+            }
+            
         }.frame(minWidth: 400, minHeight: 400)
+            .padding()
     }
 }
