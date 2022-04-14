@@ -27,10 +27,10 @@ struct ContentView: View {
                     currentLine.points.append(newPoint)
                     self.lines.append(currentLine)
                 })
-                    .onEnded({Value in
-                        self.lines.append(currentLine)
-                        self.currentLine = Line(points: [])
-                    })
+                .onEnded({Value in
+                    self.lines.append(currentLine)
+                    self.currentLine = Line(points: [])
+                })
             )
         }.frame(minWidth: 400, minHeight: 400)
     }
