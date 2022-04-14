@@ -39,15 +39,20 @@ struct ContentView: View {
             HStack {
                 Text("Thickness")
                 Slider(value: $thickness, in: 1...20){
-
                 }.frame(maxWidth: 100)
                     .onChange(of: thickness){newThickness in
                         currentLine.lineWidth = newThickness
                     }
+                Divider()
                 ColorPickerView(selectedColor: $selectedColor).onChange(of: selectedColor){ newColor in
                     currentLine.color = newColor
                 }
-            }
+                Divider()
+                Button("Clear"){
+                    self.lines = []
+                    self.currentLine = Line(points: [], color: selectedColor, lineWidth: thickness)
+                }
+            }.frame(maxHeight: 100)
         }.padding()
     }
 }
