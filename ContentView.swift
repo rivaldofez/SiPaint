@@ -34,10 +34,12 @@ struct ContentView: View {
                     self.lines.append(currentLine)
                     self.currentLine = Line(points: [], color: selectedColor, lineWidth: thickness)
                 })
-            )
+                )
             
             HStack {
                 Text("Thickness")
+                    .font(.system(size: 16))
+                
                 Slider(value: $thickness, in: 1...20){
                 }.frame(maxWidth: 100)
                     .onChange(of: thickness){newThickness in
